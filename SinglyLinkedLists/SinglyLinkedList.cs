@@ -109,7 +109,27 @@ namespace SinglyLinkedLists
         // HINT 3: If you highlight code and right click, you can use the refactor menu to extract a method for you...
         public string Last()
         {
-            throw new NotImplementedException();
+            if (firstNode == null)
+            {
+                return null;
+            }
+
+            SinglyLinkedListNode node = this.firstNode;
+            int counter = 0;
+
+            while (true)
+            {
+                if (node.Next == null)
+                {
+                    break;
+                }
+                return this.ElementAt(counter);
+                counter++;
+
+
+            }
+            return this.ElementAt(counter);
+            
         }
 
         public void Remove(string value)
