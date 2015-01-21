@@ -46,9 +46,17 @@ namespace SinglyLinkedLists
             {
                 firstNode = new SinglyLinkedListNode(value);
             }
-            else
+            
+            SinglyLinkedListNode node = this.firstNode;
+
+            while (true)
             {
-                firstNode.Next = new SinglyLinkedListNode(value);
+                if (node.Next == null)
+                {
+                    node.Next = new SinglyLinkedListNode(value);
+                    break;
+                }
+                node = node.Next;
             }
         }
 
@@ -61,19 +69,16 @@ namespace SinglyLinkedLists
         public string ElementAt(int index)
         {
             SinglyLinkedListNode node = this.firstNode;
-            for (int i = 0; i < index; i++)
-            {
-                    node = node.Next;
-                 
-            }
             if (node == null)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else
+            for (int i = 0; i < index + 1; i++)
             {
-                return node.Value;
+                node = node.Next;
             }
+            
+                return node.Value;
             
         }
 
