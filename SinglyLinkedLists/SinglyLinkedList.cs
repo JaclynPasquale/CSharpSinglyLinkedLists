@@ -45,6 +45,7 @@ namespace SinglyLinkedLists
             if (firstNode == null)
             {
                 firstNode = new SinglyLinkedListNode(value);
+                return;
             }
             
             SinglyLinkedListNode node = this.firstNode;
@@ -73,7 +74,7 @@ namespace SinglyLinkedLists
             {
                 throw new ArgumentOutOfRangeException();
             }
-            for (int i = 0; i < index + 1; i++)
+            for (int i = 0; i < index ; i++)
             {
                 node = node.Next;
             }
@@ -109,12 +110,12 @@ namespace SinglyLinkedLists
         // HINT 3: If you highlight code and right click, you can use the refactor menu to extract a method for you...
         public string Last()
         {
-            if (firstNode == null)
+            if (this.firstNode == null)
             {
                 return null;
             }
 
-            SinglyLinkedListNode node = this.firstNode;
+            SinglyLinkedListNode node = firstNode;
             int counter = 0;
 
             while (true)
@@ -123,13 +124,10 @@ namespace SinglyLinkedLists
                 {
                     break;
                 }
-                return this.ElementAt(counter);
+                node = node.Next;
                 counter++;
-
-
             }
-            return this.ElementAt(counter);
-            
+            return this.ElementAt(counter); 
         }
 
         public void Remove(string value)
