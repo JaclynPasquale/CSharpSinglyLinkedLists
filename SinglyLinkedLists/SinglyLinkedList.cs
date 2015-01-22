@@ -8,12 +8,12 @@ namespace SinglyLinkedLists
     public class SinglyLinkedList
     {
         private SinglyLinkedListNode firstNode;
-        
 
-        
+
+
         public SinglyLinkedList()
         {
-            
+
             // NOTE: This constructor isn't necessary, once you've implemented the constructor below.
         }
 
@@ -47,7 +47,7 @@ namespace SinglyLinkedLists
                 firstNode = new SinglyLinkedListNode(value);
                 return;
             }
-            
+
             SinglyLinkedListNode node = this.firstNode;
 
             while (true)
@@ -74,26 +74,26 @@ namespace SinglyLinkedLists
             {
                 throw new ArgumentOutOfRangeException();
             }
-            for (int i = 0; i < index ; i++)
+            for (int i = 0; i < index; i++)
             {
                 node = node.Next;
             }
-            
-                return node.Value;
-            
+
+            return node.Value;
+
         }
 
         public string First()
         {
-           if (firstNode == null)
+            if (firstNode == null)
             {
-               return null;  
-            } 
+                return null;
+            }
             else
             {
-                return firstNode.Value; 
+                return firstNode.Value;
             }
-         }
+        }
 
         public int IndexOf(string value)
         {
@@ -127,7 +127,7 @@ namespace SinglyLinkedLists
                 node = node.Next;
                 counter++;
             }
-            return this.ElementAt(counter); 
+            return this.ElementAt(counter);
         }
 
         public void Remove(string value)
@@ -144,5 +144,31 @@ namespace SinglyLinkedLists
         {
             throw new NotImplementedException();
         }
+        public override string ToString()
+        {
+            SinglyLinkedListNode node = this.firstNode;
+            if (node == null)
+            {
+                return "{ }";
+            }
+            StringBuilder listString = new StringBuilder("{ \"");
+
+            while (true)
+            {
+                listString.Append(node.ToString());
+                if (node.Next == null)
+                {
+                    break;
+                }
+                listString.Append("\", \"");
+                node = node.Next;
+            }
+            listString.Append("\" }");
+            return listString.ToString();
+        }
+
+
     }
 }
+
+
