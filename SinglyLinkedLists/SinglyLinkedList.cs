@@ -13,31 +13,57 @@ namespace SinglyLinkedLists
 
         public SinglyLinkedList()
         {
-
+            currentLength = 0;
             // NOTE: This constructor isn't necessary, once you've implemented the constructor below.
         }
+
+        private int currentLength;
 
         // READ: http://msdn.microsoft.com/en-us/library/aa691335(v=vs.71).aspx
         public SinglyLinkedList(params object[] values)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < values.Length; i++)
+            {
+                AddLast(values[i].ToString());
+            }
         }
 
         // READ: http://msdn.microsoft.com/en-us/library/6x16t2tx.aspx
         public string this[int i]
         {
-            get { throw new NotImplementedException(); }
+            get { return ElementAt(i); }
             set { throw new NotImplementedException(); }
         }
 
         public void AddAfter(string existingValue, string value)
         {
-            throw new NotImplementedException();
+            SinglyLinkedListNode node = this.firstNode;
+            while(existingValue != value)
+            {
+                node = node.Next;  
+                if (node == null)
+                {
+                    throw new System.ArgumentException();
+                }
+                else
+                {
+                    SinglyLinkedListNode newNode = new SinglyLinkedListNode(value);
+                    newNode.Next = node.Next;
+                    node.Next = newNode;
+
+                }
+                
+              
+            }
+             
         }
 
         public void AddFirst(string value)
         {
-            //return firstNode.Value;
+            SinglyLinkedListNode FirstGen = this.firstNode;
+            SinglyLinkedListNode SecondGen = new SinglyLinkedListNode(value);
+            this.firstNode = SecondGen;
+            SecondGen.Next = FirstGen;
         }
 
         public void AddLast(string value)
@@ -46,8 +72,8 @@ namespace SinglyLinkedLists
             {
                 firstNode = new SinglyLinkedListNode(value);
                 return;
-            }
-
+            }else
+            {
             SinglyLinkedListNode node = this.firstNode;
 
             while (true)
@@ -57,14 +83,19 @@ namespace SinglyLinkedLists
                     node.Next = new SinglyLinkedListNode(value);
                     break;
                 }
-                node = node.Next;
+                else
+                {
+                   lastnode.next = new SinglyLinkedListNode(value);
+                }
+                currentLength++;
+            }
             }
         }
 
         // NOTE: There is more than one way to accomplish this.  One is O(n).  The other is O(1).
         public int Count()
         {
-            throw new NotImplementedException();
+            return currentLength;
         }
 
         public string ElementAt(int index)
@@ -97,13 +128,31 @@ namespace SinglyLinkedLists
 
         public int IndexOf(string value)
         {
-            throw new NotImplementedException();
+            if (currentLength == 0)
+            {
+                return -1;
+            }
+            else
+            {
+                int index = 0;
+                for (int i = 0; i < currentLength; i++)
+                {
+                    if (this[i] == value)
+                    {
+                        index = i;
+                        break;
+                    } 
+                }
+                return index;
+            }
         }
 
         public bool IsSorted()
         {
             throw new NotImplementedException();
         }
+
+         
 
         // HINT 1: You can extract this functionality (finding the last item in the list) from a method you've already written!
         // HINT 2: I suggest writing a private helper method LastNode()
@@ -114,7 +163,6 @@ namespace SinglyLinkedLists
             {
                 return null;
             }
-
             SinglyLinkedListNode node = firstNode;
             int counter = 0;
 
@@ -134,15 +182,67 @@ namespace SinglyLinkedLists
         {
             throw new NotImplementedException();
         }
+        private void Swap(SinglyLinkedListNode prevPrev, SinglyLinkedListNode prev, SinglyLinkedListNode current)
+        {
+            var temp = prev;
+            prev.Next = current.Next;
+            current.Next = temp;
+            if(firstNode == temp)
+            {
+                firstNode = current;
+            }
+            else
+            {
+                prevPrev.Next = current;
+            }
+        }
+        private SinglyLinkedListNode NodeAt(int index)
+        {
+            var result = firstNode;
+            for (int i =0; i < index; i++)
+            {
+                result = result.Next;
+            }
+            return result;
+        }
 
         public void Sort()
         {
-            throw new NotImplementedException();
+            
+            if (firstNode == null || firstNode.Next == null )
+            {
+                return;
+            }
+            for (int i = 0; i < this.Count(); i++)
+			{
+			    SinglyLinkedListNode lowest = NodeAt(i);
+                
+                for (int j = 0; j < this.Count(); j++)
+                {
+                    if (lowest > NodeAt(j))
+                    {
+                        lowest = NodeAt(j);
+                    }
+                        
+                }
+                if(lowest != NodeAt(i))
+                {
+                    Swap(NodeAt(i - 1), NodeAt(i), lowest);
+                }
+                // either add a setter or swap the nodes
+			}
+            
+
         }
 
         public string[] ToArray()
         {
-            throw new NotImplementedException();
+            string[] StuffWeDontWant = new string [] {",", " ", "{", "}", "\""};
+            string list = ToString();
+            string[] words = list.Split(StuffWeDontWant, StringSplitOptions.RemoveEmptyEntries);
+
+            return words;
+
         }
         public override string ToString()
         {
@@ -155,7 +255,7 @@ namespace SinglyLinkedLists
 
             while (true)
             {
-                listString.Append(node.ToString());
+                listString.Append(node.ToString()); 
                 if (node.Next == null)
                 {
                     break;
